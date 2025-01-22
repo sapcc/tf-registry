@@ -13,17 +13,17 @@ Terraform Registry Server
 Usage: tf-registry [flags] 
 
 Flags:
-  -bucket string
+  -- bucket string
     	aws s3 bucket name containing terraform providers
-  -port string
+  -- port string
     	port for HTTPS server (default "443")
-  -profile string
+  -- profile string
     	aws named profile to assume (default "default")
-  - serverCert
+  -- serverCert
       path to https server certificate
-  - serverKey
+  -- serverKey
       path to https server key
-  - gpgKey
+  -- gpgKey
       path to gpg public key
 ```
 
@@ -32,7 +32,7 @@ Flags:
 Pre requisites:
 A GPG key pair was created and stored in vault. 
 
-Uploading is done via: https://ci1.eu-de-2.cloud.sap/teams/services/pipelines/terraform-providers
+
 Process is explained below:
 1. build new provider from source. name must be terraform-provider-<name>
 2. zip it to terraform-provide-<name>_<version>_<os>_<arch>.zip
@@ -42,12 +42,12 @@ Process is explained below:
 6. upload SHA256SUM and SHA256SUM.SIG to s3: bucket/org/name/version/, e.g. terraform-registry-1/cp/daybreak/1.0.0/signatures
 
 ### Starting server
-Server is deployed via pipeline: 
-https://ci1.eu-de-2.cloud.sap/teams/services/pipelines/terraform-registry 
-which deploys this chart: 
-https://github.wdf.sap.corp/cc/terraform-registry
 
-E.g: start the server: ./tf-registry -bucket terraform-registry-1 -port 443 -serverCert certs/localhost.crt -serverKey certs/localhost.key -gpgKey certs/gpg.pub
+
+E.g: start the server: 
+```
+./tf-registry -bucket terraform-registry-1 -port 443 -serverCert certs/localhost.crt -serverKey certs/localhost.key -gpgKey certs/gpg.pub
+```
 Certs and key will be mounted to /certs, gpg key via /gpg/gpg.pub
 
 ## TODO
