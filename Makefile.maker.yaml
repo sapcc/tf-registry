@@ -1,0 +1,46 @@
+# Configuration file for <https://github.com/sapcc/go-makefile-maker>
+
+metadata:
+  url: https://github.com/sapcc/argora
+
+binaries:
+  - name:        tf-registry
+    fromPackage: ./cmd/
+    installTo: bin/
+
+golang:
+  setGoModVersion: true
+
+golangciLint:
+  createConfig: true
+
+githubWorkflow:
+  ci:
+    enabled: true
+    coveralls: false
+    ignorePaths:
+      - "**.md" # all Markdown files
+  pushContainerToGhcr:
+    enabled: true
+    platforms: "linux/amd64"
+    tagStrategy:
+      - edge
+      - latest
+      - semver
+      - sha
+
+renovate:
+  enabled: true
+  assignees:
+    - defo89
+    - SchwarzM
+    - xsen84
+    - goerangudat
+
+dockerfile:
+  enabled: true
+  
+
+verbatim: |
+  tilt: FORCE generate
+    tilt up --stream -- --BININFO_VERSION $(BININFO_VERSION) --BININFO_COMMIT_HASH $(BININFO_COMMIT_HASH) --BININFO_BUILD_DATE $(BININFO_BUILD_DATE)
