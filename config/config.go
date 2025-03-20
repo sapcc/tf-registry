@@ -70,7 +70,7 @@ type Module struct {
 type CmdLineParams struct {
 	ServerCert string // https certificate
 	ServerKey  string // https key
-	GpgKey     string // gpg public key location
+	GpgKeys    string // gpg public keys folder
 	Pprefix    string
 	Mprefix    string
 	Port       string

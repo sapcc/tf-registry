@@ -134,7 +134,24 @@ func httpGetProviderDownloadURL(w http.ResponseWriter, r *http.Request) {
 	providerResponse.Os = p.Os
 	providerResponse.Arch = p.Arch
 	providerResponse.ShasumsSignatureURL = signaturePrefix + "/SHA256SUMS.sig"
-	providerResponse.SigningKeys = map[string]interface{}{"gpg_public_keys": []map[string]interface{}{{"key_id": "terraform-registry", "ascii_armor": getGPGkey(C.GpgKey)}}}
+	// building signing keys
+	// old way
+	// providerResponse.SigningKeys = map[string]interface{}{"gpg_public_keys": []map[string]interface{}{{"key_id": "terraform-registry", "ascii_armor": getGPGkey(C.GpgKey)}}}
+	//new way
+	// getting the list of key files from the gpgKeys local folder
+	keyFiles, err := os.ReadDir(C.GpgKeys)
+	if err != nil {
+		fmt.Println(err)
+	}
+	// building the list of keys
+	keys := []map[string]interface{}{}
+	for _, keyFile := range keyFiles {
+		if !keyFile.IsDir() && strings.Contains(keyFile.Name(), "gpg") {
+			key := map[string]interface{}{"key_id": keyFile.Name(), "ascii_armor": getGPGkey(filepath.Join(C.GpgKeys, keyFile.Name()))}
+			keys = append(keys, key)
+		}
+	}
+	providerResponse.SigningKeys = map[string]interface{}{"gpg_public_keys": keys}
 
 	// fields that the documentation list as required but does not seem to be needed for now
 	// providerResponse.Protocols = []string{"4.0", "5.1"}
@@ -143,7 +160,7 @@ func httpGetProviderDownloadURL(w http.ResponseWriter, r *http.Request) {
 	// providerResponse.Source_url = "/"
 
 	w.Header().Set("Content-Type", "application/json")
-	err := json.NewEncoder(w).Encode(providerResponse)
+	err = json.NewEncoder(w).Encode(providerResponse)
 	if err != nil {
 		fmt.Println(err)
 	}
