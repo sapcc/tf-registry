@@ -52,7 +52,7 @@ func init() {
 	RootCmd.PersistentFlags().StringVar(&C.GpgKeys, "gpgKeys", "", "path to gpg public keys folder")
 	RootCmd.PersistentFlags().StringVar(&C.Pprefix, "pprefix", "", "optional path prefix for local providers")
 	RootCmd.PersistentFlags().StringVar(&C.Mprefix, "mprefix", "", "optional path prefix for local modules")
-	RootCmd.PersistentFlags().StringVar(&C.Port, "port", "8001", "port for HTTP server")
+	RootCmd.PersistentFlags().StringVar(&C.Port, "port", "443", "port for HTTP server")
 	RootCmd.PersistentFlags().StringVar(&C.Bucket, "bucket", "", "aws s3 bucket name containing terraform providers")
 	err := RootCmd.MarkPersistentFlagRequired("serverCert")
 	if err != nil {

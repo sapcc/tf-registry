@@ -137,7 +137,7 @@ func httpGetProviderDownloadURL(w http.ResponseWriter, r *http.Request) {
 	// building signing keys
 	// old way
 	// providerResponse.SigningKeys = map[string]interface{}{"gpg_public_keys": []map[string]interface{}{{"key_id": "terraform-registry", "ascii_armor": getGPGkey(C.GpgKey)}}}
-	//new way
+	// new way
 	// getting the list of key files from the gpgKeys local folder
 	keyFiles, err := os.ReadDir(C.GpgKeys)
 	if err != nil {
