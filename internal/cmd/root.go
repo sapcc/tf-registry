@@ -30,7 +30,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/jszwec/s3fs"
+	"github.com/jszwec/s3fs/v2"
 	"github.com/sapcc/go-api-declarations/bininfo"
 	"github.com/spf13/cobra"
 )
