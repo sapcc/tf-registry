@@ -4,7 +4,7 @@ go 1.25
 
 require (
 	github.com/aws/aws-sdk-go v1.44.139
-	github.com/go-chi/chi/v5 v5.0.7
+	github.com/go-chi/chi/v5 v5.2.2
 	github.com/jszwec/s3fs v0.4.0
 )
 
