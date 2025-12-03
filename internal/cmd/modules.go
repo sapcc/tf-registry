@@ -95,6 +95,6 @@ func httpGetModule(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(" > inside httpGetModule")
 	w.Header().Set("Content-Encoding", "application/octet-stream")
 	w.Header().Set("Content-Type", "application/x-gzip")
-	fs := http.StripPrefix("/download/", http.FileServer(http.FS(C.S3fsys)))
-	fs.ServeHTTP(w, r)
+	fileServer := http.StripPrefix("/download/", http.FileServer(http.FS(C.S3fsys)))
+	fileServer.ServeHTTP(w, r)
 }

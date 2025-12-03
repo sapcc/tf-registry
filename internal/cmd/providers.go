@@ -102,7 +102,7 @@ func getGPGkey(keyFile string) string {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(" >> content (first 10 chars): ", content[0:10])
+	fmt.Println(" >> content (first 10 chars): ", string(content[0:10]))
 	return string(content)
 }
 
@@ -144,14 +144,14 @@ func httpGetProviderDownloadURL(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 	// building the list of keys
-	keys := []map[string]interface{}{}
+	keys := []map[string]any{}
 	for _, keyFile := range keyFiles {
 		if !keyFile.IsDir() && strings.Contains(keyFile.Name(), "gpg") {
-			key := map[string]interface{}{"key_id": keyFile.Name(), "ascii_armor": getGPGkey(filepath.Join(C.GpgKeys, keyFile.Name()))}
+			key := map[string]any{"key_id": keyFile.Name(), "ascii_armor": getGPGkey(filepath.Join(C.GpgKeys, keyFile.Name()))}
 			keys = append(keys, key)
 		}
 	}
-	providerResponse.SigningKeys = map[string]interface{}{"gpg_public_keys": keys}
+	providerResponse.SigningKeys = map[string]any{"gpg_public_keys": keys}
 
 	// fields that the documentation list as required but does not seem to be needed for now
 	// providerResponse.Protocols = []string{"4.0", "5.1"}
@@ -172,13 +172,13 @@ func httpGetProvider(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(" > inside httpGetProvider")
 	w.Header().Set("Content-Encoding", "application/octet-stream")
 	w.Header().Set("Content-Type", "application/x-gzip")
-	fs := http.StripPrefix("/download/", http.FileServer(http.FS(C.S3fsys)))
-	fs.ServeHTTP(w, r)
+	fileServer := http.StripPrefix("/download/", http.FileServer(http.FS(C.S3fsys)))
+	fileServer.ServeHTTP(w, r)
 }
 
 func httpGetSignatures(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(" > inside httpGetSignatures")
 	w.Header().Set("Content-Type", "text")
-	fs := http.FileServer(http.FS(C.S3fsys))
-	fs.ServeHTTP(w, r)
+	fileServer := http.FileServer(http.FS(C.S3fsys))
+	fileServer.ServeHTTP(w, r)
 }
