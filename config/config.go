@@ -39,14 +39,14 @@ type Provider struct {
 }
 
 type ProviderResp struct {
-	DownloadURL         string                 `json:"download_url"`
-	Shasum              string                 `json:"shasum"`
-	Os                  string                 `json:"os"`
-	Arch                string                 `json:"arch"`
-	Filename            string                 `json:"filename"`
-	ShasumsURL          string                 `json:"shasums_url"`
-	ShasumsSignatureURL string                 `json:"shasums_signature_url"`
-	SigningKeys         map[string]interface{} `json:"signing_keys"`
+	DownloadURL         string         `json:"download_url"`
+	Shasum              string         `json:"shasum"`
+	Os                  string         `json:"os"`
+	Arch                string         `json:"arch"`
+	Filename            string         `json:"filename"`
+	ShasumsURL          string         `json:"shasums_url"`
+	ShasumsSignatureURL string         `json:"shasums_signature_url"`
+	SigningKeys         map[string]any `json:"signing_keys"`
 }
 
 type ModuleVersions struct {
