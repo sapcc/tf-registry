@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2025 SAP SE or an SAP affiliate company
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # tf-registry
 Self Hosted Terraform Registry backed by S3
 Based on the initial work of [terraform-registry](https://github.com/nrkno/terraform-registry)

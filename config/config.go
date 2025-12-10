@@ -1,18 +1,5 @@
-/*
-Copyright 2024.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
+// SPDX-FileCopyrightText: 2025 SAP SE or an SAP affiliate company
+// SPDX-License-Identifier: Apache-2.0
 
 package config
 
@@ -39,14 +26,14 @@ type Provider struct {
 }
 
 type ProviderResp struct {
-	DownloadURL         string                 `json:"download_url"`
-	Shasum              string                 `json:"shasum"`
-	Os                  string                 `json:"os"`
-	Arch                string                 `json:"arch"`
-	Filename            string                 `json:"filename"`
-	ShasumsURL          string                 `json:"shasums_url"`
-	ShasumsSignatureURL string                 `json:"shasums_signature_url"`
-	SigningKeys         map[string]interface{} `json:"signing_keys"`
+	DownloadURL         string         `json:"download_url"`
+	Shasum              string         `json:"shasum"`
+	Os                  string         `json:"os"`
+	Arch                string         `json:"arch"`
+	Filename            string         `json:"filename"`
+	ShasumsURL          string         `json:"shasums_url"`
+	ShasumsSignatureURL string         `json:"shasums_signature_url"`
+	SigningKeys         map[string]any `json:"signing_keys"`
 }
 
 type ModuleVersions struct {

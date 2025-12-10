@@ -1,18 +1,5 @@
-/*
-Copyright 2024.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
+// SPDX-FileCopyrightText: 2025 SAP SE or an SAP affiliate company
+// SPDX-License-Identifier: Apache-2.0
 
 package cmd
 
@@ -102,7 +89,7 @@ func getGPGkey(keyFile string) string {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(" >> content (first 10 chars): ", content[0:10])
+	fmt.Println(" >> content (first 10 chars): ", string(content[0:10]))
 	return string(content)
 }
 
@@ -144,14 +131,14 @@ func httpGetProviderDownloadURL(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 	// building the list of keys
-	keys := []map[string]interface{}{}
+	keys := []map[string]any{}
 	for _, keyFile := range keyFiles {
 		if !keyFile.IsDir() && strings.Contains(keyFile.Name(), "gpg") {
-			key := map[string]interface{}{"key_id": keyFile.Name(), "ascii_armor": getGPGkey(filepath.Join(C.GpgKeys, keyFile.Name()))}
+			key := map[string]any{"key_id": keyFile.Name(), "ascii_armor": getGPGkey(filepath.Join(C.GpgKeys, keyFile.Name()))}
 			keys = append(keys, key)
 		}
 	}
-	providerResponse.SigningKeys = map[string]interface{}{"gpg_public_keys": keys}
+	providerResponse.SigningKeys = map[string]any{"gpg_public_keys": keys}
 
 	// fields that the documentation list as required but does not seem to be needed for now
 	// providerResponse.Protocols = []string{"4.0", "5.1"}
@@ -172,13 +159,13 @@ func httpGetProvider(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(" > inside httpGetProvider")
 	w.Header().Set("Content-Encoding", "application/octet-stream")
 	w.Header().Set("Content-Type", "application/x-gzip")
-	fs := http.StripPrefix("/download/", http.FileServer(http.FS(C.S3fsys)))
-	fs.ServeHTTP(w, r)
+	fileServer := http.StripPrefix("/download/", http.FileServer(http.FS(C.S3fsys)))
+	fileServer.ServeHTTP(w, r)
 }
 
 func httpGetSignatures(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(" > inside httpGetSignatures")
 	w.Header().Set("Content-Type", "text")
-	fs := http.FileServer(http.FS(C.S3fsys))
-	fs.ServeHTTP(w, r)
+	fileServer := http.FileServer(http.FS(C.S3fsys))
+	fileServer.ServeHTTP(w, r)
 }
