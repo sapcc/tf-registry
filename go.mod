@@ -15,6 +15,6 @@ require (
 
 require (
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
-	github.com/sapcc/go-api-declarations v1.14.1
+	github.com/sapcc/go-api-declarations v1.19.0
 	github.com/spf13/cobra v1.8.1
 )
