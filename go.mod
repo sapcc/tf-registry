@@ -1,6 +1,6 @@
 module github.com/sapcc/tf-registry
 
-go 1.25
+go 1.26
 
 require (
 	github.com/aws/aws-sdk-go v1.44.139
